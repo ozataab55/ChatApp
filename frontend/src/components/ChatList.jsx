@@ -312,7 +312,6 @@ const ChatList = ({ user, onSelectChat, onLogout }) => {
         maxWidth: "100%",
         minWidth: 0,
         height: "100%",
-        bgcolor: "background.paper",
         display: "flex",
         flexDirection: "column",
         borderRight: { xs: "none", sm: "1px solid" },

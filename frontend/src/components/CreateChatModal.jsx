@@ -89,15 +89,17 @@ const CreateChatModal = ({ open, onClose, onCreated, currentUser }) => {
     }
   }
 
-  const handleNext = () => {
-    if (step === 1) {
-      setStep(2)
-    } else if (step === 2 && !isGroup && selectedUsers.length === 1) {
-      handleCreate()
-    } else if (step === 2 && isGroup && selectedUsers.length > 0) {
-      setStep(3)
-    }
+const handleNext = () => {
+  if (step === 1) {
+    setStep(2)
+  } else if (step === 2 && !isGroup && selectedUsers.length === 1) {
+    handleCreate()
+  } else if (step === 2 && isGroup && selectedUsers.length > 0) {
+    setStep(3)
+  } else if (step === 3 && isGroup) {
+    handleCreate()
   }
+}
 
   const handleBack = () => {
     if (step > 1) {

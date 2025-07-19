@@ -11,8 +11,7 @@ const port = 5005;
 app.use(cors());
 app.use(bodyParser.json());
 
-// MongoDB bağlantısı
-mongoose.connect("mongodb://localhost:27017/chatdb", {
+mongoose.connect("mongodb://127.0.0.1:27017/chatdb", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -40,13 +39,12 @@ app.set('io', io);
 const onlineUsers = new Set();
 
 io.on('connection', (socket) => {
-  // Kullanıcı bağlanınca id'sini bildirir
   socket.on('userOnline', (userId) => {
     onlineUsers.add(userId);
     io.emit('onlineUsers', Array.from(onlineUsers));
   });
 
-  // Odaya katılım ve mesaj eventleri
+  
   socket.on('join', (chatId) => {
     socket.join(chatId);
   });
@@ -55,21 +53,18 @@ io.on('connection', (socket) => {
     io.to(data.chatId).emit('message', data.message);
   });
 
-  // Typing (yazıyor) event'i
   socket.on('typing', ({ chatId, userId, isTyping }) => {
     socket.to(chatId).emit('typing', { chatId, userId, isTyping });
   });
 
-  // Bağlantı kopunca kullanıcıyı çıkar
   socket.on('disconnect', () => {
-    // Her bağlantı için userId'yi saklamamız gerek
+   
     if (socket.userId) {
       onlineUsers.delete(socket.userId);
       io.emit('onlineUsers', Array.from(onlineUsers));
     }
   });
 
-  // userId'yi socket objesine kaydet
   socket.on('userOnline', (userId) => {
     socket.userId = userId;
   });

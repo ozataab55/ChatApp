@@ -4,7 +4,7 @@ const Chat = require("../models/Chat");
 const User = require("../models/User");
 const Message = require("../models/Message");
 
-// Sohbet veya grup oluştur
+
 router.post("/create", async (req, res) => {
     try {
         const { isGroup, name, members, admins, groupPicture } = req.body;
